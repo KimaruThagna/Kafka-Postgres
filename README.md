@@ -63,8 +63,18 @@ CREATE TABLE TRANSACTIONS_SUSPECT AS
 SELECT AMOUNT, TIMESTAMP, USER-ID, TX_ID, ACCOUNT_ACTION  FROM TRANSACTIONS_REKEY WHERE AMOUNT > 8000000 WITH (KAFKA_TOPIC=TRANSACTIONS_SUSPECT, VALUE_FORMAT=’delimited’, KEY=TX_ID) ;
 ```
 
-## Submit Sink Config to Connect registry
+## Submit Sink Config to Connect Registry
 Run the curl command
 ```
 curl -X POST -H “Accept:application/json” -H “Content-Type: application/json” --data @sink.json http://localhost:8083/connectors
 ```
+## Inspect Data in Postgres
+Access the running postgres container defined in the docker-compose file by running 
+`docker exec -it <postgres_container_id> psql -U postgres -W postgres ecommerce`
+
+View the data brought in by Kafka connect by running the SQL commands
+```
+SELECT * FROM  TRANSACTIONS_SUSPECT;
+SELECT COUNT(TX_ID) FROM TRANSACTIONS_SUSPECT;
+```
+When you add new data in the source database by copying csv data, the data should go through the whole process, get processed via the simple KSQL query and upon re running the above query, the results will be different.

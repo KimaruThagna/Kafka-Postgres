@@ -4,6 +4,8 @@ services:
   postgres:
     image: debezium/postgres:11
     environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     command: postgres -c config_file=/home/config/postgresql.conf
     ports:
