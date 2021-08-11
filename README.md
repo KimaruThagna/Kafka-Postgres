@@ -56,3 +56,9 @@ WITH (KAFKA_TOPIC=TRANSACTIONS_REKEY, VALUE_FORMAT=’AVRO’, KEY=’user-id’
 SHOW TABLES;
 ```
 
+## Perform basic analysis with KSQL
+Assume that transactions above 8,000,000 are considered suspicious, we would create a table with suspicious transactions using the SQL statement below
+```
+CREATE TABLE TRANSACTIONS_SUSPECT AS
+SELECT AMOUNT, TIMESTAMP, USER-ID, TX_ID, ACCOUNT_ACTION  FROM TRANSACTIONS_REKEY WHERE AMOUNT > 8000000 WITH (KAFKA_TOPIC=TRANSACTIONS_SUSPECT, VALUE_FORMAT=’delimited’, KEY=TX_ID) ;
+```
