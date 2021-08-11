@@ -30,6 +30,29 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  ksqldb-server:    
+      image: confluentinc/ksqldb-server:0.15.0
+      hostname: ksqldb-server
+      container_name: ksqldb-server
+      ports:
+          - "8088:8088"
+          - "9092:9092"
+      environment:
+          KSQL_LISTENERS: http://0.0.0.0:8088 # connection id for rest api clients
+          KSQL_BOOTSTRAP_SERVERS: broker:9092
+          KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+          KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+      depends_on: 
+          - kafka
+  ksqldb-cli:
+      image: confluentinc/ksqldb-cli:0.15.0
+      container_name: ksqldb-cli
+      depends_on:
+      - ksqldb-server
+      entrypoint: /bin/sh
+      tty: true
+
+
   schema-registry:
     image: confluentinc/cp-schema-registry:5.1.2
     hostname: schema-registry
