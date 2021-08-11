@@ -14,12 +14,19 @@ An ecommerce store with transactional data and wishes to process the event data 
 # Connectors
 `source.json` (source) Defines the connection between the source database(postgres) and Kafka as the destination
 `sink.json` (Sink) Defines the connection between Kafka as the source and a postgres DB as the destination
+# Running the project
+Spin up the services using the command ` docker-compose up ` use `-d` flag to run in detatch mode.
 
-# Setup a Postgres DB and Load Data
-To spin up a postgres db, run the command
+## Setup a Postgres DB and Load Data
+On a separate terminal, To spin up a postgres db, run the command
 ```
 docker run -it --rm --network=kafka_postgres_default \
          -v $PWD:/home/data/ \
          postgres:11.0 psql -h postgres -U postgres
 ```
 In the PSQL interface, run the commands defined in the `tables.sql` file
+## Make source connection
+Submit `source.json` file to the connect service via a curl command
+```
+curl -X POST -H “Accept:application/json” -H “Content-Type: application/json” --data @source.json http://localhost:8083/connectors
+```
