@@ -12,4 +12,5 @@ An ecommerce store with transactional data and wishes to process the event data 
 - Kafka's schema registry for imposing the AVRO format.
 
 # Connectors
-`source.json` Defines the connection between the source database(postgres) and Kafka as the destination
+`source.json` (source) Defines the connection between the source database(postgres) and Kafka as the destination
+`sink.json` (Sink) Defines the connection between Kafka as the source and a postgres DB as the destination
