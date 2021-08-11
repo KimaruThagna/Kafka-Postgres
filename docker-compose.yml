@@ -54,7 +54,6 @@ services:
       entrypoint: /bin/sh
       tty: true
 
-
   schema-registry:
     image: confluentinc/cp-schema-registry:5.1.2
     hostname: schema-registry
@@ -81,7 +80,7 @@ services:
       KSQL_KSQL_SERVICE_ID: ksql-server
 
   connect:
-    image: mtpatter/debezium-connect  # built from debezium/connect:0.10 
+    image: mtpatter/debezium-connect  # credits to mtpatter
     depends_on:
       - zookeeper
       - kafka

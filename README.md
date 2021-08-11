@@ -34,7 +34,8 @@ Query the connector to see if it worked `curl -H “Accept:application/json” l
 
 if successful, the transactions table should be seen as a TOPIC. Run the command
 ` docker exec -it <kafka-container-id> /bin/bash` to access the kafka container bash. In this case, "kafka" is the container name. You can also use the container ID
-Once in the container bash, run the commmand `/usr/bin/kafka-topics — list — zookeeper zookeeper:2181` to view topics.
+Once in the container bash, run the commmand
+ `/usr/bin/kafka-topics — list — zookeeper zookeeper:2181` to view topics.
 
 ## Access Topics via KSQL
 Since the KSQL-CLI server is running courtesy of docker compose, run the command ` docker exec -it <ksqldb-cli-container-id> /bin/ksql http://ksqldb-server:8088 ` 
@@ -60,7 +61,7 @@ SHOW TABLES;
 Assume that transactions above 8,000,000 are considered suspicious, we would create a table with suspicious transactions using the SQL statement below
 ```
 CREATE TABLE TRANSACTIONS_SUSPECT AS
-SELECT AMOUNT, TIMESTAMP, USER-ID, TX_ID, ACCOUNT_ACTION  FROM TRANSACTIONS_REKEY WHERE AMOUNT > 8000000 WITH (KAFKA_TOPIC=TRANSACTIONS_SUSPECT, VALUE_FORMAT=’delimited’, KEY=TX_ID) ;
+SELECT AMOUNT, TIMESTAMP, USER-ID, TX_ID, ACCOUNT_ACTION  FROM TRANSACTIONS_REKEY WHERE AMOUNT > 8000000 WITH (KAFKA_TOPIC=TRANSACTIONS_SUSPECT, VALUE_FORMAT=’delimited’, KEY=TX_ID);
 ```
 
 ## Submit Sink Config to Connect Registry
@@ -70,6 +71,7 @@ curl -X POST -H “Accept:application/json” -H “Content-Type: application/js
 ```
 ## Inspect Data in Postgres
 Access the running postgres container defined in the docker-compose file by running 
+
 `docker exec -it <postgres_container_id> psql -U postgres -W postgres ecommerce`
 
 View the data brought in by Kafka connect by running the SQL commands
