@@ -30,3 +30,8 @@ Submit `source.json` file to the connect service via a curl command
 ```
 curl -X POST -H “Accept:application/json” -H “Content-Type: application/json” --data @source.json http://localhost:8083/connectors
 ```
+Query the connector to see if it worked `curl -H “Accept:application/json” localhost:8083/connectors/`
+
+if successful, the transactions table should be seen as a TOPIC. Run the command
+` docker exec -it kafka /bin/bash` to access the kafka container bash. In this case, "kafka" is the container name. You can also use the container ID
+Once in the container bash, run the commmand `/usr/bin/kafka-topics — list — zookeeper zookeeper:2181` to view topics.
