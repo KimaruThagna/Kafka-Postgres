@@ -39,3 +39,13 @@ Once in the container bash, run the commmand `/usr/bin/kafka-topics — list —
 ## Access Topics via KSQL
 Since the KSQL-CLI server is running courtesy of docker compose, run the command ` docker exec -it <ksqldb-cli-container-id> /bin/ksql http://ksqldb-server:8088 ` 
 Once in the CLI enter the command `SHOW TOPICS`
+In the KSQL interface, create a stream and table for mirroring the transactions table in the postgres DB
+
+```
+CREATE STREAM transaction_src (id INTEGER, account_action VARCHAR, user-id INTEGER, tx_id VARCHAR, amount DOUBLE PRECISION)
+WITH (KAFKA_TOPIC=’dbserver1.public.transactions, VALUE_FORMAT=’AVRO’);
+
+CREATE STREAM transaction_rekey WITH (PARTITIONS=1) AS 
+SELECT * FROM transaction_src PARTITION BY user-id;
+
+```
