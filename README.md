@@ -48,4 +48,11 @@ WITH (KAFKA_TOPIC=’dbserver1.public.transactions, VALUE_FORMAT=’AVRO’);
 CREATE STREAM transaction_rekey WITH (PARTITIONS=1) AS 
 SELECT * FROM transaction_src PARTITION BY user-id;
 
+SHOW STREAMS;
+
+CREATE TABLE transactions (id INTEGER, account_action VARCHAR, user-id INTEGER, tx_id VARCHAR, amount DOUBLE PRECISION)
+WITH (KAFKA_TOPIC=TRANSACTIONS_REKEY, VALUE_FORMAT=’AVRO’, KEY=’user-id’);
+
+SHOW TABLES;
 ```
+
