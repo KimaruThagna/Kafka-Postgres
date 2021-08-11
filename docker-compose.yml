@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  postgres:
+    image: debezium/postgres:11
+    environment:
+      POSTGRES_PASSWORD: postgres
+    command: postgres -c config_file=/home/config/postgresql.conf
+    ports:
+      - 5432:5432
+    volumes:
+      - $PWD:/home/config
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.1.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  
