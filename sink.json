@@ -11,7 +11,7 @@
       "auto.create": "true",
       "auto.evolve": "true",
       "insert.mode": "upsert",
-      "pk.fields": "RESEARCH",
+      "pk.fields": "tx_id",
       "pk.mode": "record_key"
     }
   }
